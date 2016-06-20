@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>PHP编码规范 by icesyc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PHP编码规范</h1>
+      <h2 class="project-tagline"></h2>
+    </section>
+
+    <section class="main-content">
+      <p>本文档描述了在php开发中应该遵守的规范，对代码风格的统一起到指导作用。</p>
+
+<h2>
+<a id="目录文件及编码" class="anchor" href="#%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%8F%8A%E7%BC%96%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>目录文件及编码</h2>
+
+<p>文件名需要遵守yii2框架的约定，controller和model需要使用驼峰式(camelize)的命名规则，而view文件需要使用下划线(underscore)的命名规则，如：</p>
+
+<pre><code>控制器：TestController.php PayOrderController.php
+模型: Test.php PayOrder.php
+视图：test.php pay_order.php
+</code></pre>
+
+<p>注意：yii的generator在生成view时会给每个控制器生成一个对应view的目录，目录的命令规则是中间线(dash)的方式，如 pay-order，如果需要为控制器使用单独的目录，请遵守此规则。</p>
+
+<p>文件的编码统一使用UTF-8编码</p>
+
+<p>目录名必须全部小写</p>
+
+<h2>
+<a id="格式" class="anchor" href="#%E6%A0%BC%E5%BC%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>格式</h2>
+
+<h3>
+<a id="大括号" class="anchor" href="#%E5%A4%A7%E6%8B%AC%E5%8F%B7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>大括号</h3>
+
+<ul>
+<li>大括号与if,else,for,do,while一起使用时，即使只有一条语句，也要加应该把大括号加上。</li>
+<li>左大括号在声明语句在同一行，即括号左边不需要换行，右边需要。</li>
+<li>右大括号需要单独占一行(使用函数表达式时除外)</li>
+</ul>
+
+<p>如</p>
+
+<pre><code>if ($user-&gt;isLogin()){
+    $user-&gt;addScore($score);
+} else {
+    $this-&gt;error('用户');
+}
+</code></pre>
+
+<p>使用函数表达式的情况</p>
+
+<pre><code>usort($array, function($a, $b){
+    return $a - $b;
+});
+</code></pre>
+
+<h3>
+<a id="空白" class="anchor" href="#%E7%A9%BA%E7%99%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>空白</h3>
+
+<p>赋值、比较、逻辑、运算、字符串操作符的两端需要有空格</p>
+
+<pre><code>$user = Yii::$app-&gt;user;
+if ($user-&gt;score &gt; 100){
+    $user-&gt;score = $user-&gt;score - 100;
+}
+$str = $str . 'another string';
+</code></pre>
+
+<p>函数有参数列表中间需要有空格</p>
+
+<pre><code>function addScore($user, $type, $status){
+    ...
+}
+</code></pre>
+
+<p>类的方法和方法之间需要有空行</p>
+
+<pre><code>function func1(){
+    ... 
+}
+
+function func2(){
+    ...
+}
+</code></pre>
+
+<h3>
+<a id="缩进" class="anchor" href="#%E7%BC%A9%E8%BF%9B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>缩进</h3>
+
+<p>统一使用4个空格，不要使用tab来缩进</p>
+
+<h3>
+<a id="数组" class="anchor" href="#%E6%95%B0%E7%BB%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>数组</h3>
+
+<p>数组使用[]来定义，不要使用array()的语法。<br>
+数组的定义如果超过80个字符，需要使用多行分隔，数组的最后一个元素后在也要添加逗号，这样在添加新元素的时候会比较方便。</p>
+
+<pre><code>$config = [
+    'host' =&gt; 'localhost',
+    'username' =&gt; 'mysql',
+    'password' =&gt; 'mysql',
+];
+</code></pre>
+
+<h2>
+<a id="命名规则" class="anchor" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>命名规则</h2>
+
+<ul>
+<li>接口和类的命名需要使用驼峰式，首字母大写，如 UserScore</li>
+<li>变量及函数的命名需要使用驼峰式，首字母小写，如 $userScore, getUserScore($user)</li>
+<li>常量的定义采用大写+下划线的方式，如 ORDER_STATUS</li>
+<li>mysql的库名、表名、和字段名都需要使用全部小写+下划线的规则，以避免在不同系统下产生问题。</li>
+</ul>
+
+<h2>
+<a id="编程实践" class="anchor" href="#%E7%BC%96%E7%A8%8B%E5%AE%9E%E8%B7%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>编程实践</h2>
+
+<h3>
+<a id="字符串" class="anchor" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>字符串</h3>
+
+<p>字符串优先使用单引号，如果字符串里包含变量，可以使用双引号或使用sprintf来进行格式化，如</p>
+
+<pre><code>$str = 'this is a test';
+$str2 = sprintf('user name is %s, age is %d', $name, $age);
+$str3 = "user name is $ice, age is $age";
+</code></pre>
+
+<h3>
+<a id="函数" class="anchor" href="#%E5%87%BD%E6%95%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>函数</h3>
+
+<p>单个函数的行数应该在100行以内，超过100行的要考虑拆分成多个函数，保持函数的功能尽量简单。</p>
+
+<h3>
+<a id="常量定义" class="anchor" href="#%E5%B8%B8%E9%87%8F%E5%AE%9A%E4%B9%89" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>常量定义</h3>
+
+<p>对于数据库表示状态或类别的定义，使用tinyint(1)来存储，并在Model中使用常量定义不同数字表示的含义，如表示订单状态的字段status可以表示如下：</p>
+
+<pre><code>const STATUS_NOT_PAY = 0; //未支付
+const STATUS_PENDING = 1; //待处理
+const STATUS_DONE = 2; //已完成
+const STATUS_CANCEL = 3; //已取消
+</code></pre>
+
+<p>在代码中不要尽量避免直接使用常量来判断状态，而是提供对应的方法，如</p>
+
+<pre><code>class Order{
+    public function isPending(){
+        return $this-&gt;status == self::STATUS_PENDING;
+    }
+}
+...
+$order = Order::findOne($id);
+if ($order-&gt;isPending()){
+    ...
+}
+</code></pre>
+
+<p>常量的定义是为了使数字具有更明确的含义，而使用方法既可以使代码的可读性更好，也对外面隐藏了常量及判断的逻辑细节，这样即使判断的逻辑需要调整，也只需要改对应的函数。</p>
+
+<h3>
+<a id="时间字段" class="anchor" href="#%E6%97%B6%E9%97%B4%E5%AD%97%E6%AE%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>时间字段</h3>
+
+<p>对于mysql，日期和时间有对应的数据类型date和datetime，使用date和datetime类型的好处是日期在存储的时候我们不需要做转换，直接将2016-12-20这样的字符串直接存储即可，并可以对该字段进行比较查询，输出的时候也无须做任何转换，这种类型在程序中判断时需要做一次转换，在判断空日期的时候也需要使用</p>
+
+<pre><code>if ($date == '0000-00-00'){
+    ...
+}
+</code></pre>
+
+<p>这样的代码才能完成。</p>
+
+<p>另外就是使用int(11)来保存unix timestamp，使用int存储在判断时由于是数字的直接比较，代码会显示更直观和整洁</p>
+
+<pre><code>if ($date &gt; 0){
+    ...
+}
+</code></pre>
+
+<p>但是用户在创建数据时一般会使用日期控件来输入，这时需要将输入日期转换成unix timestamp才能入库，通常有2种做法</p>
+
+<p>使用Model rules的filterValidator来处理，在Model中增加新的rule</p>
+
+<pre><code>[['date', 'filter', function($value){
+    return strtotime($value);   
+}]]
+</code></pre>
+
+<p>在Model的beforeSave方法里处理</p>
+
+<pre><code>public function beforeSave($insert)
+{
+    if (parent::beforeSave($insert)) {
+        $this-&gt;date = strtotime($this-&gt;date);
+        return true;
+    } else {
+        return false;
+    }
+}
+</code></pre>
+
+<p>至于哪种方案更好一些，我认为要看使用的场景，如果只是做为一种显示需要，使用mysql的date类型则更简单，如果需要对该字段进行很复杂的条件判断，我更倾向于unix timestamp。</p>
+
+<h3>
+<a id="使用策略模式代替过多的if和else" class="anchor" href="#%E4%BD%BF%E7%94%A8%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F%E4%BB%A3%E6%9B%BF%E8%BF%87%E5%A4%9A%E7%9A%84if%E5%92%8Celse" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用策略模式代替过多的if和else</h3>
+
+<p>当代码逻辑中出现很多个if elseif的判断，就要考虑这个问题了，比如：</p>
+
+<pre><code>if ($order-&gt;status == 1){
+    ...
+} elseif ($order-&gt;status == 2){
+    ...
+} elseif ($order-&gt;status == 3){
+    ...
+} elseif ($order-&gt;status == 3){
+    ...
+}
+</code></pre>
+
+<p>上面的逻辑可能是想根据订单的不同状态有不同的处理逻辑，如果状态很多就会让代码变得非常难看，这种情况下通常可以使用策略模式解决这个问题。</p>
+
+<pre><code>public $processors = [ 
+    self::STATUS_PENDING =&gt; 'Pending',
+    self::STATUS_DONE =&gt; 'Done',
+    self::STATUS_CANCEL =&gt; 'Cancel'
+];
+
+public function process(){
+    $processor = 'process' . $this-&gt;processors[$this-&gt;status];
+    return $this-&gt;$processor();
+}
+
+public function processPending(){
+    ...
+}
+
+public function processDone(){
+    ...
+}
+
+public function processCancel(){
+    ... 
+}
+</code></pre>
+
+<p>由于php的动态语言特性，我们不需要反射机制也可以动态的调用方法。</p>
+
+<h3>
+<a id="参数验证" class="anchor" href="#%E5%8F%82%E6%95%B0%E9%AA%8C%E8%AF%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>参数验证</h3>
+
+<p>有的时候我们需要对很多参数进行验证，或对同一参数多次验证，这时候如果写的不好，也很能写成这样</p>
+
+<pre><code>if (Util::isEmail($_GET['email'])){
+    return $this-&gt;error('email is error');
+} elseif ($_GET['username'] == ''){
+    return $this-&gt;error('username is empty');
+} elseif ($_GET['password'] == ''){
+    return $this-&gt;error('password is empty');
+}
+....
+</code></pre>
+
+<p>这时我们又陷入了大量if else的困局。想一下，能不能事先把规则和消息配置好，再统一循环验证？，其实这就是Yii框架数据验证的方式，Yii框架本身提供了大量的Validator，配合Model可以让验证变得非常容易</p>
+
+<pre><code>class UserForm extends Model{
+
+    public function rules(){
+        return [
+            [['username', 'password'], 'required', 'message' =&gt; '用户名密码不能为空'], //不能为空
+            [['email'], 'email', 'message' =&gt; '邮箱格式不正确'], //email格式
+            [['age'], 'integer', 'min' =&gt; 0], //年龄必须是整数，不能是负数
+        ];
+    }
+}
+</code></pre>
+
+<p>使用定义好的验证逻辑</p>
+
+<pre><code>$form = new UserForm();
+$form-&gt;load($_POST);
+if(!$form-&gt;validate()){
+    $errors = $form-&gt;errors;
+    ...
+}
+</code></pre>
+
+<h3>
+<a id="避免代码嵌套层次过多" class="anchor" href="#%E9%81%BF%E5%85%8D%E4%BB%A3%E7%A0%81%E5%B5%8C%E5%A5%97%E5%B1%82%E6%AC%A1%E8%BF%87%E5%A4%9A" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>避免代码嵌套层次过多</h3>
+
+<p>代码层次如果太深，会影响我们正常阅读，同时也会让逻辑变得非常混乱。<br>
+在函数的章节时，我们建议应该让函数的代码尽量控制在100行以内，这也有助于减少代码的层次。<br>
+通常函数内的代码嵌套不应该超过3层，比如下面这样是非常糟糕的风格：</p>
+
+<pre><code>if($a == 1){
+    if($b == 2){
+        foreach($users as $user){
+            if($user-&gt;id &gt; 10){
+                if($user-&gt;age &lt; 20){
+                    ...
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>该如何避免呢？有三条建议你可以考虑：</p>
+
+<ol>
+<li>合并条件，看看能否将多个判断条件合并成一条</li>
+<li>将否定条件写在前面，条件不符合就直接返回</li>
+<li>在循环中使用continue和break来先处理否定条件</li>
+</ol>
+
+<p>如上面的代码可以改写成：</p>
+
+<pre><code>if($a != 1){
+    return false;
+}
+if($b != 2){
+    return false;
+}
+foreach($users as $user){
+    if($user-&gt;id &lt;= 10 || $user-&gt;age &gt;= 20){
+        continue;
+    }
+    ...
+}
+</code></pre>
+
+<h3>
+<a id="精简代码" class="anchor" href="#%E7%B2%BE%E7%AE%80%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>精简代码</h3>
+
+<p>使用三元操作符来代替if else，如</p>
+
+<pre><code>if($user-&gt;isLogin()){
+    $score = 10;
+}else{
+    $score = 20;
+}
+</code></pre>
+
+<p>可以写成</p>
+
+<pre><code>$score = $user-&gt;isLogin() ? 10 : 20;
+</code></pre>
+
+      <footer class="site-footer">
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
