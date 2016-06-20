@@ -42,8 +42,8 @@
 
 <ul>
 <li>大括号与if,else,for,do,while一起使用时，即使只有一条语句，也要加应该把大括号加上。</li>
-<li>左大括号在声明语句在同一行，即括号左边不需要换行，右边需要。</li>
-<li>右大括号需要单独占一行(使用函数表达式时除外)</li>
+<li>左大括号与声明语句在同一行，即括号左边不需要换行，右边需要。</li>
+<li>右大括号需要单独占一行(使用函数表达式时除外)。</li>
 </ul>
 
 <p>如</p>
@@ -74,7 +74,7 @@ if ($user-&gt;score &gt; 100){
 $str = $str . 'another string';
 </code></pre>
 
-<p>函数有参数列表中间需要有空格</p>
+<p>函数的参数之间需要有空格</p>
 
 <pre><code>function addScore($user, $type, $status){
     ...
@@ -149,7 +149,7 @@ const STATUS_DONE = 2; //已完成
 const STATUS_CANCEL = 3; //已取消
 </code></pre>
 
-<p>在代码中不要尽量避免直接使用常量来判断状态，而是提供对应的方法，如</p>
+<p>在代码中尽量避免直接使用常量来判断状态，而是提供对应的方法，如</p>
 
 <pre><code>class Order{
     public function isPending(){
@@ -168,7 +168,7 @@ if ($order-&gt;isPending()){
 <h3>
 <a id="时间字段" class="anchor" href="#%E6%97%B6%E9%97%B4%E5%AD%97%E6%AE%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>时间字段</h3>
 
-<p>对于mysql，日期和时间有对应的数据类型date和datetime，使用date和datetime类型的好处是日期在存储的时候我们不需要做转换，直接将2016-12-20这样的字符串直接存储即可，并可以对该字段进行比较查询，输出的时候也无须做任何转换，这种类型在程序中判断时需要做一次转换，在判断空日期的时候也需要使用</p>
+<p>对于mysql，日期和时间有对应的数据类型date和datetime，使用date和datetime类型时，我们需要存储格式化之后的日期，即2016-12-20这样的字符串，并可以对该字段进行比较查询，输出的时候也无须做任何转换。使用date类型在程序中比较时间时需要做一次转换，在判断空日期的时候也需要使用</p>
 
 <pre><code>if ($date == '0000-00-00'){
     ...
@@ -177,7 +177,7 @@ if ($order-&gt;isPending()){
 
 <p>这样的代码才能完成。</p>
 
-<p>另外就是使用int(11)来保存unix timestamp，使用int存储在判断时由于是数字的直接比较，代码会显示更直观和整洁</p>
+<p>另外就是使用int(11)来保存unix timestamp，在程序中判断时由于是数字，可以直接比较，代码会显示更直观和整洁</p>
 
 <pre><code>if ($date &gt; 0){
     ...
